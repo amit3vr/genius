@@ -1,4 +1,4 @@
-<?php namespace Brainiac\Configuration;
+<?php namespace Genius\Configuration;
 
 return array(
 
@@ -24,7 +24,7 @@ return array(
 
     'site'
     => [
-        'name'      => 'Brainiac',
+        'name'      => 'Genius',
         'address'   => '',
         'status'    => true,
 

@@ -1,4 +1,4 @@
-<?php namespace Brainiac;
+<?php namespace Genius;
 
 final class Header
 {

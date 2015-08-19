@@ -1,14 +1,18 @@
-<?php namespace Brainiac;
+<?php namespace Genius\Modules;
 
-final class Login extends Kernel\Module
+use Genius;
+
+final class Login extends Genius\Kernel\ModuleBase
 {
     public function __construct()
     {
-        $this->_title = 'Login Page';
+        parent::__construct('Login Page');
+    }
 
-        parent::__construct('login', 'login');
+    protected function generate()
+    {
+        $layout = new Genius\Layout('login');
     }
 }
 
-return new Login();
 ?>

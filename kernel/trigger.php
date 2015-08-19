@@ -1,4 +1,4 @@
-<?php namespace Brainiac\Trigger;
+<?php namespace Genius\Trigger;
 
 abstract class Trigger extends \Exception
 {
@@ -16,7 +16,7 @@ abstract class Trigger extends \Exception
         $this->_time = date($app('system', 'date-format', 'log'));
 
         if(!isset(self::$_lang))
-            self::$_lang = \Brainiac\Get::lang('errors');
+            self::$_lang = \Genius\Get::lang('errors');
 
         if(isset(self::$_lang[$eid]))
             $this->message = self::$_lang[$eid];

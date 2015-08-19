@@ -1,22 +1,11 @@
-<?php namespace Brainiac;
+<?php namespace Genius;
 
 final class Get
 {
     public static function lang($module = null)
     {
-        global $app;
-
-        if(is_null($app('system', 'language')))
-            $lang = 'en-us';
-        else
-            $lang = $app('system', 'language');
-
-        if(is_null($module))
-            return @include_once LANG_PATH ."{$lang}/lang.php";
-        else
-            return @include_once LANG_PATH ."{$lang}/{$module}.lang.php";
+        return @include_once Path::lang_file($module);
     }
-
 
     public static function& module($module_name)
     {
@@ -26,13 +15,18 @@ final class Get
             throw new Trigger\Warning('module_not_init');
 
         $module_name = $app('site', 'pages', $module_name);
-        $path = BASE . "modules/{$module_name}.module.php";
+        $path = Path::module_file($module_name);
 
         if(file_exists($path))
-            $module = include_once $path;
+        {
+            include_once $path;
+
+            $module_name = "Genius\\Modules\\$module_name";
+            $module = new $module_name;
+        }
         else throw new Trigger\Error('module_file_not_found');
 
-        if(!is_subclass_of($module, 'Brainiac\Kernel\Module'))
+        if(!is_subclass_of($module, 'Genius\Kernel\ModuleBase'))
             throw new Trigger\Error('module_not_unified');
 
         return $module;

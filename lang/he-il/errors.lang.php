@@ -1,4 +1,4 @@
-<?php namespace Brainiac\Language\Hebrew;
+<?php namespace Genius\Language\Hebrew;
 
 return [
 

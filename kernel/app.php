@@ -1,4 +1,4 @@
-<?php namespace Brainiac;
+<?php namespace Genius;
 
 final class Application
 {
@@ -15,7 +15,7 @@ final class Application
 
     public function __construct()
     {
-        if(file_exists(BASE . '/install'))
+        if(file_exists(BASE. '/install'))
             Header::redirect('/install');
 
         if(isset($GLOBALS['app']))
@@ -23,7 +23,7 @@ final class Application
         else $GLOBALS['app'] = $this;
 
         if(file_exists(BASE . '/config.php'))
-            self::$_config = require_once(BASE .'config.php');
+            self::$_config = require_once(BASE. '/config.php');
         else throw new Trigger\Error('config_not_init');
 
         @date_default_timezone_set($this('system', 'timezone'));
@@ -39,10 +39,6 @@ final class Application
             $page_name = strtolower($page_name);
 
             echo Get::module($page_name);
-
-            /* footer */
-            echo "<br /><br /> <br />";
-            echo "Execution time: " . Utilities::timer();
         }
         catch(Trigger\Error $e)
         {
