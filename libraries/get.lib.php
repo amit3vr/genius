@@ -7,28 +7,28 @@ final class Get
         return @include_once Path::lang_file($module);
     }
 
-    public static function& module($module_name)
+    public static function& page($name)
     {
         global $app;
 
-        if(!array_key_exists($module_name, $app('site', 'pages')))
-            throw new Trigger\Warning('module_not_init');
+        if(!array_key_exists($name, $app('site', 'pages')))
+            throw new Trigger\Error('page_not_found', 404);
 
-        $module_name = $app('site', 'pages', $module_name);
-        $path = Path::module_file($module_name);
+        $name = $app('site', 'pages', $name);
+        $path = Path::page_file($name);
 
         if(file_exists($path))
         {
             include_once $path;
 
-            $module_name = "Genius\\Modules\\$module_name";
-            $module = new $module_name;
+            $name = "Genius\\Pages\\$name";
+            $page = new $name;
         }
-        else throw new Trigger\Error('module_file_not_found');
+        else throw new Trigger\Error('module_not_init');
 
-        if(!is_subclass_of($module, 'Genius\Kernel\ModuleBase'))
+        if(!is_subclass_of($page, 'Genius\Kernel\PageBase'))
             throw new Trigger\Error('module_not_unified');
 
-        return $module;
+        return $page;
     }
 }

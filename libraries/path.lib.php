@@ -2,9 +2,9 @@
 
 final class Path
 {
-    public static function module_file($name)
+    public static function page_file($name)
     {
-        return BASE. "/modules/{$name}.module.php";
+        return BASE. "/pages/{$name}.page.php";
     }
 
     public static function lang_file($name = null)

@@ -4,9 +4,9 @@
 require_once 'kernel/environment.php';
 
 /* application core */
-( new Genius\Application )->display_page(@$_GET['do']);
+( new Genius\Application )->display_page(@$_GET['page']);
 
 /* footer */
-echo "Execution time: " . Genius\Utilities::timer();
+echo nl2br("\n\nExecution time: " . Genius\Utilities::timer());
 
 ?>
