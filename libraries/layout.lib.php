@@ -13,10 +13,14 @@ final class Layout
 
     public function __construct($name)
     {
+        $this->_path = Path::layout_file($name);
+
+        if(!file_exists($this->_path))
+            throw new Trigger\Warning('template_not_found');
+
         $this->_engine = new Smarty();
         $this->_engine->caching = 0;
 
-        $this->_path = Path::layout_file($name);
         $this->_lang = null;
         $this->_components = array();
     }

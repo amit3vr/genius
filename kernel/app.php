@@ -15,12 +15,12 @@ final class Application
 
     public function __construct()
     {
-        if(file_exists(BASE. '/install'))
-            Header::redirect('/install');
-
         if(isset($GLOBALS['app']))
             throw new Trigger\Error('app_already_init');
         else $GLOBALS['app'] = $this;
+
+        if(file_exists(BASE. '/install'))
+            Header::redirect('/install');
 
         if(file_exists(BASE . '/config.php'))
             self::$_config = require_once(BASE. '/config.php');
@@ -36,9 +36,17 @@ final class Application
             if($this('site', 'status') === false)
                 throw new Trigger\Error('site_offline');
 
+            /* get page */
             $page_name = strtolower($page_name);
+            $page = Get::page($page_name);
 
-            echo Get::module($page_name);
+            /* generate layout */
+            $layout = new Layout('skin');
+
+            $layout->title = $page('title');
+            $layout->content = (string) $page;
+
+            echo $layout;
         }
         catch(Trigger\Error $e)
         {
