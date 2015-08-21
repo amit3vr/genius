@@ -6,14 +6,14 @@ abstract class Trigger extends \Exception
     protected $_time;
     protected $_eid;
 
-    public function __construct($eid, $header = null)
+    public function __construct($eid, $http_code = null)
     {
         global $app;
 
         parent::__construct($eid);
 
         $this->_eid = $eid;
-        $this->_time = date($app('system', 'date-format', 'log'));
+        $this->_time = \date($app('system', 'date-format', 'log'));
 
         if(!isset(self::$_lang))
             self::$_lang = \Genius\Get::lang('errors');
@@ -21,8 +21,14 @@ abstract class Trigger extends \Exception
         if(isset(self::$_lang[$eid]))
             $this->message = self::$_lang[$eid];
 
-        if(!is_null($header))
-            header($header);
+        switch($http_code)
+        {
+            case 404:
+                header(404);
+            break;
+
+            default: break;
+        }
     }
 
     public function getID()
