@@ -20,6 +20,8 @@ return array(
             'friendly'  => '',
             'sql'       => '',
         ],
+
+        'hash_salt' => '',
     ],
 
     'site'
@@ -27,12 +29,6 @@ return array(
         'name'      => 'Genius',
         'address'   => '',
         'status'    => true,
-
-        'pages'
-        => [
-            null    => 'Home',
-            'login' => 'Login',
-        ],
     ],
 
     'webmaster'

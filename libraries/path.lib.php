@@ -4,6 +4,8 @@ final class Path
 {
     public static function page_file($name)
     {
+        $name = strtolower($name);
+
         return BASE. "/pages/{$name}.page.php";
     }
 

@@ -38,6 +38,8 @@ final class Application
 
             /* get page */
             $page_name = strtolower($page_name);
+            $page_name = ucfirst($page_name);
+
             $page = Get::page($page_name);
 
             /* generate layout */
@@ -45,6 +47,7 @@ final class Application
 
             $layout->title = $page('title');
             $layout->content = (string) $page;
+            $layout->exec_timer = Utilities::timer();
 
             echo $layout;
         }

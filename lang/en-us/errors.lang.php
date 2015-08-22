@@ -5,11 +5,11 @@ return [
     'page_not_found'
         => "404: Got Lost?",
 
-    'module_not_init'
-        => "Module isn't initialized in the system.",
+    'page_not_init'
+        => "Page is currently disabled.",
 
-    'module_not_unified'
-        => "Module object doesn't follow module policy (must implement Kernel\\Module).",
+    'page_not_unified'
+        => "Page object doesn't follow page policy (must implement Kernel\\PageBase).",
 
     'site_offline'
         => "The Site is currently offline.",

@@ -1,5 +1,8 @@
 <?php namespace Genius\Trigger;
 
+use Genius\Get,
+    Genius\Header;
+
 abstract class Trigger extends \Exception
 {
     protected static $_lang;
@@ -10,25 +13,20 @@ abstract class Trigger extends \Exception
     {
         global $app;
 
+        /* initialize */
         parent::__construct($eid);
 
         $this->_eid = $eid;
-        $this->_time = \date($app('system', 'date-format', 'log'));
+        $this->_time = date($app('system', 'date-format', 'log'));
 
         if(!isset(self::$_lang))
-            self::$_lang = \Genius\Get::lang('errors');
+            self::$_lang = Get::lang('errors');
 
         if(isset(self::$_lang[$eid]))
             $this->message = self::$_lang[$eid];
 
-        switch($http_code)
-        {
-            case 404:
-                header(404);
-            break;
-
-            default: break;
-        }
+        /* execute header code if given */
+        Header::code($http_code);
     }
 
     public function getID()

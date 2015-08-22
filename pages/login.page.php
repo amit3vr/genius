@@ -12,8 +12,7 @@ final class Login extends Genius\Kernel\PageBase
 
     protected function generate()
     {
-        $layout = new Layout('login');
-        return $layout;
+        return 'hi';
     }
 }
 
