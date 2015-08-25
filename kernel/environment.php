@@ -16,6 +16,9 @@ spl_autoload_register(function($class_name)
        case 'Genius\Kernel\PageBase':
            return require_once 'page.php';
 
+       case 'Genius\Kernel\User':
+           return require_once 'user.php';
+
        case 'Genius\Trigger\Error':
        case 'Genius\Trigger\Warning':
            return require_once 'trigger.php';
