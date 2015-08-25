@@ -1,10 +1,13 @@
 <?php
 
-abstract class User
+class User
 {
-    protected $_gid;
-    protected $_username;
-    protected $_password;
+    protected $_key;
+
+    function __construct($username)
+    {
+        $this->_key = $username;
+    }
 }
 
 ?>

@@ -11,10 +11,15 @@ final class Application
     const VERSION = 1.0;
     const LICENSE = "asdg3456sdfghsfgh43sdvsdlg23";
 
-    private static $_config, $_nav;
+    private static $_config;
+    private $_nav;
+
+    public $session = null;
 
     public function __construct()
     {
+        @date_default_timezone_set($this('system', 'timezone'));
+
         if(isset($GLOBALS['app']))
             throw new Trigger\Error('app_already_init');
         else $GLOBALS['app'] = $this;
@@ -23,10 +28,10 @@ final class Application
             Header::redirect('/install');
 
         if(file_exists(BASE . '/config.php'))
-            self::$_config = require_once(BASE. '/config.php');
+            Utilities::init(self::$_config, require_once(BASE. '/config.php'));
         else throw new Trigger\Error('config_not_init');
 
-        @date_default_timezone_set($this('system', 'timezone'));
+        $this->session = new Session();
     }
 
     public function display_page($page_name)
@@ -37,8 +42,15 @@ final class Application
                 throw new Trigger\Error('site_offline');
 
             /* get page */
-            $page_name = strtolower($page_name);
-            $page_name = ucfirst($page_name);
+            if(!$this->session->is_logged())
+            {
+                $page_name = 'login';
+            }
+            else
+            {
+                $page_name = strtolower($page_name);
+                $page_name = ucfirst($page_name);
+            }
 
             $page = Get::page($page_name);
 
