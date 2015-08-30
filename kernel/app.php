@@ -11,27 +11,29 @@ final class Application
     const VERSION = 1.0;
     const LICENSE = "asdg3456sdfghsfgh43sdvsdlg23";
 
-    private static $_config;
+    private $_config;
     private $_nav;
 
     public $session = null;
+    public $database = null;
 
     public function __construct()
     {
-        @date_default_timezone_set($this('system', 'timezone'));
-
-        if(isset($GLOBALS['app']))
-            throw new Trigger\Error('app_already_init');
-        else $GLOBALS['app'] = $this;
-
         if(file_exists(BASE. '/install'))
             Header::redirect('/install');
 
+        if(!isset($GLOBALS['app']))
+            $GLOBALS['app'] = $this;
+        else throw new Trigger\Error('app_already_init');
+
         if(file_exists(BASE . '/config.php'))
-            Utilities::init(self::$_config, require_once(BASE. '/config.php'));
+            Utilities::init($this->_config, require_once(BASE. '/config.php'));
         else throw new Trigger\Error('config_not_init');
 
+        @date_default_timezone_set($this('system', 'timezone'));
+
         $this->session = new Session();
+        $this->database = new Database();
     }
 
     public function display_page($page_name)
@@ -55,7 +57,7 @@ final class Application
             $page = Get::page($page_name);
 
             /* generate layout */
-            $layout = new Layout('skin');
+            $layout = new Layout('skin.html');
 
             $layout->title = $page('title');
             $layout->content = (string) $page;
@@ -79,7 +81,7 @@ final class Application
 
     public function __invoke(...$keys)
     {
-        $conf = self::$_config;
+        $conf = $this->_config;
 
         foreach ($keys as $key)
             @$conf = $conf[$key];
@@ -87,3 +89,5 @@ final class Application
         return @$conf;
     }
 }
+
+?>

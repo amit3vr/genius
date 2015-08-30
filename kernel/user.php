@@ -1,12 +1,19 @@
-<?php
+<?php namespace Genius\Kernel;
 
 class User
 {
+    const KEY_COLUMNS = array('ID', 'email');
+
     protected $_key;
 
-    function __construct($username)
+    public function __construct($key)
     {
-        $this->_key = $username;
+        $this->_key = $key;
+    }
+
+    public function verify_password($password)
+    {
+
     }
 }
 

@@ -2,11 +2,25 @@
 
 return array(
 
-    'database'
+    'db'
     => [
-        'hostname'  => 'localhost',
-        'username'  => 'root',
-        'password'  => '',
+        'default_driver' => 'mysql',
+
+        'mysql'
+        => [
+            'host'      => 'localhost',
+            'port'      =>  3306,
+
+            'username'  => 'root',
+            'password'  => '',
+
+            'dbname'    => 'geniusdb',
+        ],
+
+        'sqlite'
+        => [
+            'dbfile' => '',
+        ],
     ],
 
     'system'

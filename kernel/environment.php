@@ -1,7 +1,7 @@
 <?php namespace Genius\Environment;
 
 if(version_compare(PHP_VERSION, '5.6.0', '<'))
-    die('Genius requires PHP version of atleast 5.6.0.');
+    die('Genius requires PHP version of at least 5.6.0.');
 
 /* Directories Paths */
 define('BASE', dirname(__DIR__));

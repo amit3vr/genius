@@ -4,7 +4,10 @@ final class Get
 {
     public static function lang($module = null)
     {
-        return @include_once Path::lang_file($module);
+        if(file_exists(Path::lang_file($module)))
+            return @include_once Path::lang_file($module);
+
+        else return [];
     }
 
     public static function& page($name)
