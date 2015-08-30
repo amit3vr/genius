@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Brainiac.iml" filepath="$PROJECT_DIR$/.idea/Brainiac.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Genius.iml" filepath="$PROJECT_DIR$/.idea/Genius.iml" />
     </modules>
   </component>
 </project>
