@@ -26,6 +26,6 @@ final class Path
 
     public static function layout_file($name)
     {
-        return BASE. "/template/{$name}.html";
+        return BASE. "/template/{$name}";
     }
 }
