@@ -8,14 +8,14 @@ final class Application
     # | |_) | | | (_| | | | | | | (_| | (__
     # |_.__/|_|  \__,_|_|_| |_|_|\__,_|\___|
 
-    const VERSION = 1.0;
-    const LICENSE = "asdg3456sdfghsfgh43sdvsdlg23";
+    const VERSION = '1.0.0-DEV';
+    const LICENSE = 'asdg3456sdfghsfgh43sdvsdlg23';
 
-    private $_config;
-    private $_nav;
+    private $config;
+    private $nav;
 
-    public $session = null;
-    public $database = null;
+    public $session;
+    public $database;
 
     public function __construct()
     {
@@ -27,7 +27,7 @@ final class Application
         else throw new Trigger\Error('app_already_init');
 
         if(file_exists(BASE . '/config.php'))
-            Utilities::init($this->_config, require_once(BASE. '/config.php'));
+            Utilities::init($this->config, require_once(BASE. '/config.php'));
         else throw new Trigger\Error('config_not_init');
 
         @date_default_timezone_set($this('system', 'timezone'));
@@ -36,7 +36,17 @@ final class Application
         $this->database = new Database();
     }
 
-    public function display_page($page_name)
+    public function __invoke(...$keys)
+    {
+        $conf = $this->config;
+
+        foreach ($keys as $key)
+            @$conf = $conf[$key];
+
+        return @$conf;
+    }
+
+    public function display($page_name)
     {
         try
         {
@@ -57,11 +67,10 @@ final class Application
             $page = Get::page($page_name);
 
             /* generate layout */
-            $layout = new Layout('skin.html');
+            $layout = new Layout('overall-site-skin.html');
 
-            $layout->title = $page('title');
+            $layout->title = $page->title;
             $layout->content = (string) $page;
-            $layout->exec_timer = Utilities::timer();
 
             echo $layout;
         }
@@ -77,16 +86,6 @@ final class Application
         {
             echo $e;
         }
-    }
-
-    public function __invoke(...$keys)
-    {
-        $conf = $this->_config;
-
-        foreach ($keys as $key)
-            @$conf = $conf[$key];
-
-        return @$conf;
     }
 }
 
