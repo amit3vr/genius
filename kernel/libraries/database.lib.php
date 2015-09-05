@@ -23,6 +23,7 @@ final class Database extends PDO
                     $dsn_args .= "host={$mysql['host']};";
                     $dsn_args .= "port={$mysql['port']};";
                     $dsn_args .= "dbname={$mysql['dbname']};";
+                    $dsn_args .= 'charset=utf8;';
 
                     $arguments[] = "mysql:{$dsn_args}";
                     $arguments[] = $mysql['username'];
@@ -50,39 +51,45 @@ final class Database extends PDO
 
 final class DBTable
 {
-    private $_db;
-    private $_name;
+    private $db;
+    private $name;
 
     public function __construct(Database $db, $t_name)
     {
-        $this->_db = $db;
-        $this->_name = $t_name;
+        global $app;
+
+        $this->db = $db;
+        $this->name = ($app('db', 'table_prefix') ?: '') . $t_name;
     }
 
-    public function get_records(Array $fields, Array $where)
+    public function get_records(Array $fields = null, Array $where = null, Array $limit = null)
     {
         $fields = empty($fields) ? '*' : implode(',', $fields);
-        $query = "SELECT {$fields} FROM {$this->_name}";
+        $query = "SELECT {$fields} FROM {$this->name}";
 
         if(!empty($where))
         {
-            $where_clause = " WHERE";
+            $query .= ' WHERE ';
 
-            foreach ($where as $field => $value)
+            array_walk($where, function(&$value, $field)
             {
-                $where_clause .= " {$field}='{$value}'";
+                $value = "{$field}='{$value}'";
+            });
 
-                if(each($where))
-                    $where_clause .= ' OR';
-            }
-         }
+            $query .= implode(' OR ', $where);
+        }
 
-        // check for correct syntax
-        $this->_db->prepare($query)->fetchAll();
+        if(!empty($limit))
+        {
+            $query .= ' LIMIT ';
+            $query .= implode(',', $limit);
+        }
+
+        return $this->db->query($query)->fetchAll();
     }
 
-    public function search(Array $where)
+    public function get(Array $where)
     {
-        // fetches only the first record found.
+        return reset($this->get_records([], $where, [1]));
     }
 }

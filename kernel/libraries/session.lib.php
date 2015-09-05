@@ -4,26 +4,16 @@ use Genius\Kernel\User;
 
 final class Session
 {
-    private static $_user = null;
+    private static $user = null;
 
     function __construct()
     {
         session_start();
     }
 
-    function set_user(User &$user)
-    {
-        self::$_user = $user;
-    }
-
-    function get_user()
-    {
-        return self::$_user;
-    }
-
     function is_logged()
     {
-        return !is_null(self::$_user);
+        return !empty($_SESSION['user']);
     }
 
     function __set($name, $value)

@@ -6,33 +6,33 @@ use \Smarty;
 
 final class Layout
 {
-    private $_path;
-    private $_engine;
-    private $_lang;
-    private $_components;
+    private $path;
+    private $engine;
+    private $lang;
+    private $components;
 
     public function __construct($name)
     {
-        $this->_path = Path::layout_file($name);
+        $this->path = Path::layout_file($name);
 
-        if(!file_exists($this->_path))
+        if(!file_exists($this->path))
             throw new Trigger\Warning('template_not_found');
 
-        $this->_engine = new Smarty();
-        $this->_engine->caching = 0;
+        $this->engine = new Smarty();
+        $this->engine->caching = 0;
 
-        $this->_lang = null;
-        $this->_components = array();
+        $this->lang = null;
+        $this->components = array();
     }
 
     public function set_language($lang)
     {
-        $this->_lang = Get::lang($lang);
+        $this->lang = Get::lang($lang);
     }
 
     public function add_component($name, $value)
     {
-        $this->_engine->assign($name, $value);
+        $this->engine->assign($name, $value);
     }
 
     public function __set($name, $value)
@@ -42,7 +42,9 @@ final class Layout
 
     public function render()
     {
-        return $this->_engine->fetch($this->_path, null, null, null, false);
+        $this->exec_timer = Utilities::timer();
+
+        return $this->engine->fetch($this->path, null, null, null, false);
     }
 
     public function __toString()

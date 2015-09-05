@@ -12,6 +12,7 @@ final class Get
 
     public static function& page($name)
     {
+        $name = urlencode($name);
         $source_path = Path::page_file($name);
 
         if(!file_exists($source_path))
@@ -24,9 +25,6 @@ final class Get
 
         if(!is_subclass_of($page, 'Genius\Kernel\PageBase'))
             throw new Trigger\Error('page_not_unified');
-
-        if($page('is_enabled') === false)
-            throw new Trigger\Error('page_not_init');
 
         return $page;
     }
