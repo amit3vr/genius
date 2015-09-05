@@ -16,9 +16,6 @@ spl_autoload_register(function($class_name)
        case 'Genius\Kernel\PageBase':
            return require_once 'page.php';
 
-       case 'Genius\Kernel\User':
-           return require_once 'user.php';
-
        case 'Genius\Trigger\Error':
        case 'Genius\Trigger\Warning':
            return require_once 'trigger.php';
@@ -27,7 +24,7 @@ spl_autoload_register(function($class_name)
            $class_name = basename($class_name);
            $class_name = strtolower($class_name);
 
-           return @include_once BASE. "/libraries/{$class_name}.lib.php";
+           return @include_once "libraries/{$class_name}.lib.php";
    }
 });
 

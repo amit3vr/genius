@@ -5,9 +5,9 @@ use Genius\Get,
 
 abstract class Trigger extends \Exception
 {
-    protected static $_lang;
-    protected $_time;
-    protected $_eid;
+    protected static $lang;
+    protected $time;
+    protected $eid;
 
     public function __construct($eid, $http_code = null)
     {
@@ -16,14 +16,14 @@ abstract class Trigger extends \Exception
         /* initialize */
         parent::__construct($eid);
 
-        $this->_eid = $eid;
-        $this->_time = date($app('system', 'date-format', 'log'));
+        $this->eid = $eid;
+        $this->time = date($app('system', 'date-format', 'log'));
 
-        if(!isset(self::$_lang))
-            self::$_lang = Get::lang('errors');
+        if(!isset(self::$lang))
+            self::$lang = Get::lang('errors');
 
-        if(isset(self::$_lang[$eid]))
-            $this->message = self::$_lang[$eid];
+        if(isset(self::$lang[$eid]))
+            $this->message = self::$lang[$eid];
 
         /* execute header code if given */
         Header::code($http_code);
@@ -31,12 +31,12 @@ abstract class Trigger extends \Exception
 
     public function getID()
     {
-        return $this->_eid;
+        return $this->eid;
     }
 
     public function getDate()
     {
-        return $this->_time;
+        return $this->time;
     }
 }
 
