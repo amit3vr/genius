@@ -5,6 +5,7 @@ return array(
     'db'
     => [
         'default_driver' => 'mysql',
+        'table_prefix'   => '',
 
         'mysql'
         => [
