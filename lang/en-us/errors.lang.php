@@ -1,4 +1,4 @@
-<?php namespace Genius\Language\English_US;
+<?php namespace Genius\Language\English\US;
 
 return [
 
