@@ -5,38 +5,31 @@ use Genius,
 
 abstract class PageBase
 {
-    private $_enable;
+    private $enable;
 
-    protected $_title;
-    protected $_visibility; # groups of authorization that can see this module.
+    public $title;
 
     protected abstract function generate();
 
     protected function __construct($title, $enable = true)
     {
-        $this->_title = $title;
-        $this->_enable = $enable;
-    }
-
-    public function __invoke($attribute)
-    {
-        switch($attribute)
-        {
-            case 'is_enabled':
-                return $this->_enable;
-
-            case 'title':
-                return $this->_title;
-        }
-
-        return null;
+        $this->title = $title;
+        $this->enable = $enable;
     }
 
     public function __toString()
     {
         try
         {
-            return $this->generate();
+            if($this->enable === false)
+            {
+                throw new Trigger\Warning('page_not_init');
+
+            }
+            else
+            {
+                return $this->generate();
+            }
         }
         catch(Trigger\Warning $e)
         {
