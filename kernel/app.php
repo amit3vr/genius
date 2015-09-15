@@ -12,10 +12,9 @@ final class Application
     const LICENSE = 'asdg3456sdfghsfgh43sdvsdlg23';
 
     private $config;
-    private $nav;
+    private $db;
 
     public $session;
-    public $database;
 
     public function __construct()
     {
@@ -32,8 +31,8 @@ final class Application
 
         @date_default_timezone_set($this('system', 'timezone'));
 
+        $this->db = new Database('mysql', $this('mysql'));
         $this->session = new Session();
-        $this->database = new Database();
     }
 
     public function __invoke(...$keys)
@@ -46,6 +45,17 @@ final class Application
         return @$conf;
     }
 
+    public function database($table = null)
+    {
+        if(!empty($table) && is_string($table))
+        {
+            $db = $this->db;
+            return $db($table);
+        }
+
+        return $this->db;
+    }
+
     public function display($page_name)
     {
         try
@@ -54,15 +64,8 @@ final class Application
                 throw new Trigger\Error('site_offline');
 
             /* get page */
-            if(!$this->session->is_logged())
-            {
-                $page_name = 'login';
-            }
-            else
-            {
-                $page_name = strtolower($page_name);
-                $page_name = ucfirst($page_name);
-            }
+            $page_name = strtolower($page_name);
+            $page_name = ucfirst($page_name);
 
             $page = Get::page($page_name);
 
@@ -71,6 +74,7 @@ final class Application
 
             $layout->title = $page->title;
             $layout->content = (string) $page;
+            $layout->user = $this->session->user;
 
             echo $layout;
         }

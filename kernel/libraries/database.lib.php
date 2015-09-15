@@ -6,36 +6,38 @@ use PDO,
 
 final class Database extends PDO
 {
-    public function __construct($driver = null, $args = null)
+    private $config;
+
+    public function __construct($driver, Array $config)
     {
         global $app;
 
-        $arguments = [];
+        $this->config = $config;
 
         try
         {
-            switch ($driver ?: $app('db', 'default_driver'))
+            switch ($driver)
             {
                 case 'mysql':
-                    $mysql = $app('db', 'mysql');
+                    $dsn_args['host'] = @$config['host'] ?: 'localhost';
+                    $dsn_args['port'] = @$config['port'] ?: '3306';
+                    $dsn_args['dbname'] = @$config['dbname'];
+                    $dsn_args['charset'] = @$config['charset'] ?: 'utf8';
 
-                    $dsn_args = '';
-                    $dsn_args .= "host={$mysql['host']};";
-                    $dsn_args .= "port={$mysql['port']};";
-                    $dsn_args .= "dbname={$mysql['dbname']};";
-                    $dsn_args .= 'charset=utf8;';
+                    $dsn = 'mysql:';
 
-                    $arguments[] = "mysql:{$dsn_args}";
-                    $arguments[] = $mysql['username'];
-                    $arguments[] = $mysql['password'];
+                    foreach($dsn_args as $field => $value)
+                        $dsn .= "{$field}={$value};";
 
-                    break;
+                    parent::__construct($dsn,
+                                        @$config['username'] ?: 'root',
+                                        @$config['password'] ?: '');
+
+                break;
 
                 default:
                     throw new Trigger\Error('db_driver_not_supported');
             }
-
-            parent::__construct(...$arguments);
         }
         catch(PDOException $e)
         {
@@ -43,53 +45,130 @@ final class Database extends PDO
         }
     }
 
-    public function __invoke($table_name)
+    public function __invoke(...$tables)
     {
-        return new DBTable($this, $table_name);
+        foreach($tables as &$name)
+        {
+            $name = (@$this->config['tprefix'] ?: '') . $name;
+        }
+
+        return new DBTable($this, ...$tables);
     }
 }
 
 final class DBTable
 {
     private $db;
-    private $name;
+    private $tables;
 
-    public function __construct(Database $db, $t_name)
+    public $fields;
+    public $where;
+
+    public function __construct(Database $db, ...$table_names)
     {
-        global $app;
-
         $this->db = $db;
-        $this->name = ($app('db', 'table_prefix') ?: '') . $t_name;
+        $this->tables = $table_names;
+        $this->where = [];
     }
 
-    public function get_records(Array $fields = null, Array $where = null, Array $limit = null)
+    public function __set($field, $value)
     {
-        $fields = empty($fields) ? '*' : implode(',', $fields);
-        $query = "SELECT {$fields} FROM {$this->name}";
+        $this->where[$field] = $value;
 
-        if(!empty($where))
+        return $this;
+    }
+
+    public function get_records($row_count = null, $offset = null)
+    {
+        $fields = empty($this->fields) ? '*' : implode(',', $this->fields);
+        $query = "SELECT {$fields} FROM " . implode(',', $this->tables);
+
+        if(!empty($this->where))
         {
             $query .= ' WHERE ';
 
-            array_walk($where, function(&$value, $field)
+            array_walk($this->where, function(&$value, $field)
             {
                 $value = "{$field}='{$value}'";
             });
 
-            $query .= implode(' OR ', $where);
+            $query .= implode(' OR ', $this->where);
         }
 
-        if(!empty($limit))
+        if(!empty($row_count))
         {
-            $query .= ' LIMIT ';
-            $query .= implode(',', $limit);
+            $query .= " LIMIT {$row_count}";
+
+            if(!empty($offset))
+                $query .= "OFFSET {$offset}";
         }
 
         return $this->db->query($query)->fetchAll();
     }
 
-    public function get(Array $where)
+    /*
+     * @var $where {array} a shorthand for setting up result filters.
+     */
+    public function get(Array $where = [])
     {
-        return reset($this->get_records([], $where, [1]));
+        foreach($where as $field => $value)
+        {
+            $this->{$field} = $value;
+        }
+
+        return reset($this->get_records(1));
+    }
+}
+
+abstract class DBObject // ORM OBJECT
+{
+    const TABLE_NAME = '';
+    const PRIMARY_KEY = 'id';
+    const INDEXES = [];
+
+    protected $details;
+
+    protected function __construct($key)
+    {
+        global $app;
+
+        $db = $app->database($this::TABLE_NAME);
+
+        foreach($this::INDEXES as $field)
+        {
+            $db->{$field} = $key;
+        }
+
+        $this->details = $db->get();
+
+        if(empty($this->details))
+            throw new Trigger\Warning('db_object_not_found');
+    }
+
+    public function __get($field)
+    {
+        return @$this->details[$field];
+    }
+
+    public static function all(Array $where = [])
+    {
+        global $app;
+
+        $class_name = get_called_class();
+
+        $db = $app->database($class_name::TABLE_NAME);
+        $db->fields = [$class_name::PRIMARY_KEY];
+
+        foreach($where as $field => $value)
+        {
+            $db->$field = $value;
+        }
+
+        foreach($db->get_records() as $record)
+        {
+            $ret[] = new $class_name($record[$class_name::PRIMARY_KEY]);
+        }
+
+        return @$ret;
     }
 }
