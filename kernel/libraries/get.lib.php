@@ -1,6 +1,6 @@
 <?php namespace Genius;
 
-final class Get
+class Get
 {
     public static function lang($module = null)
     {

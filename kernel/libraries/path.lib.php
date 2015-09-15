@@ -1,6 +1,6 @@
 <?php namespace Genius;
 
-final class Path
+class Path
 {
     public static function page_file($name)
     {

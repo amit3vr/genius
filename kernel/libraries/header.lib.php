@@ -1,6 +1,6 @@
 <?php namespace Genius;
 
-final class Header
+class Header
 {
     public static function code($code)
     {

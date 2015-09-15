@@ -3,7 +3,7 @@
 use Exception,
     Genius\Database;
 
-final class Log
+class Log
 {
     public function __construct(Exception $exception)
     {
