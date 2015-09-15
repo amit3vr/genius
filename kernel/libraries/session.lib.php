@@ -1,7 +1,5 @@
 <?php namespace Genius;
 
-use Genius\Kernel\User;
-
 final class Session
 {
     private static $user = null;
@@ -16,13 +14,13 @@ final class Session
         return !empty($_SESSION['user']);
     }
 
-    function __set($name, $value)
+    function __set($field, $value)
     {
-        @$_SESSION[$name] = $value;
+        @$_SESSION[$field] = $value;
     }
 
-    function __get($name)
+    function __get($field)
     {
-        return @$_SESSION[$name];
+        return @$_SESSION[$field];
     }
 }
