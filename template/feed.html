@@ -1,0 +1,142 @@
+<div class="feed">
+    <div style="width: 20%">
+        <div class="side-menu">
+            <div>
+                <h6>YOU</h6>
+                <a href="/@{$globals['user']->username}">{$globals['user']->email}</a>
+                <a href="/settings">Settings</a>
+            </div>
+            <div>
+                <h6>SCHOOL</h6>
+                <a href="/feed" class="active">Feed</a>
+                <a href="/inbox">Inbox</a>
+                <a href="/classes">Classes</a>
+                <a href="/groups">Groups</a>
+                <a href="/schedule">Schedule</a>
+                <a href="/calander">School Events</a>
+            </div>
+            <div>
+                <h6>NEED A HAND?</h6>
+                <a href="/help">Help</a>
+                <a href="/feedback">Feedback</a>
+                <a href="/forum">Ask a Question</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="data-items" style="width: 55%">
+        <input class="search-box" type="text" placeholder="Search..." />
+        <div id="pinned">
+        {foreach $pinned_posts as $post}
+        {if $post instanceof Genius\Announcement}
+        <div class="announcement">
+            <div class="header">
+                {if $post->author}
+                <div class="profile-details">
+                    <img src="http://bootstrap-themes.github.io/application/assets/img/avatar-dhg.png"/>
+                    <div>
+                        <a href="/@{$post->author->username}">{$post->author->fullname}</a> · {Utilities::time_elapsed($post->create_date)}
+                        <small>Teacher</small>
+                    </div>
+                </div>
+                {else}
+                <div class="profile-details">
+                    <img src="http://bootstrap-themes.github.io/application/assets/img/avatar-dhg.png"/>
+                    <div>
+                        <a href="/about">School Board</a> · {Utilities::time_elapsed($post->create_date)}
+                        <small>System Administrator</small>
+                    </div>
+                </div>
+                {/if}
+                <div class="side-info">PINNED</div>
+            </div>
+            <div class="content">
+                {$post->content}
+            </div>
+        </div>
+        {/if}
+        {/foreach}
+        </div>
+
+        <div class="separator">RECENT NEWS</div>
+        <div class="not-pinned">
+        {nocache}
+        {foreach $regular_posts as $post}
+        {if $post instanceof Genius\Announcement}
+        <div class="announcement">
+            <div class="header">
+                {if $post->author}
+                <div class="profile-details">
+                    <img src="http://bootstrap-themes.github.io/application/assets/img/avatar-dhg.png"/>
+                    <div>
+                        <a href="/@{$post->author->username}">{$post->author->fullname}</a> · {Utilities::time_elapsed($post->create_date)}
+                        <small>Teacher</small>
+                    </div>
+                </div>
+                {else}
+                <div class="profile-details">
+                    <img src="http://bootstrap-themes.github.io/application/assets/img/avatar-dhg.png"/>
+                    <div>
+                        <a href="/about">School Board</a> · {Utilities::time_elapsed($post->create_date)}
+                        <small>System Administrator</small>
+                    </div>
+                </div>
+                {/if}
+            </div>
+            <div class="content">
+                {$post->content}
+            </div>
+        </div>
+        {else if $post instanceof Genius\Event}
+        <div class="event">
+            <div class="header">
+                <div class="date"><small>{Date($post->start_date)|date_format:"%B"}
+                </small>{Date($post->start_date)|date_format:"%d"}</div>
+                <div class="details">
+                    <small>@ {$post->place}</small>
+                    <h1>{$post->title}</h1>
+                    <small>From 19:30 to 21:00</small>
+                </div>
+                <div class="side-info">
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-xs btn-danger"><span class="fa fa-times" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-xs btn-warning"><span class="fa fa-question" aria-hidden="true"></span></button>
+                        <button type="button" class="btn btn-xs btn-success"><span class="fa fa-check" aria-hidden="true"></span></button>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                {$post->description}
+            </div>
+        </div>
+        {/if}
+        {/foreach}
+        {/nocache}
+        </div>
+        <div>
+            <ul class="pager">
+                <li class="previous disabled"><a><span aria-hidden="true">&larr;</span> Older</a></li>
+                <li class="next"><a href="feed/1">Newer <span aria-hidden="true">&rarr;</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="widgets" style="width: 25%">
+        <div class="statistics">
+            <span>
+                6 <h6>Assignments due</h6>
+            </span>
+            <span>
+                3 <h6>New Assignments</h6>
+            </span>
+        </div>
+
+        <div>
+            [ CALANDER ]
+        </div>
+
+        <div>
+            [ FRIENDS ACTIVITIES ]
+        </div>
+    </div>
+</div>

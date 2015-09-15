@@ -1,0 +1,176 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    /* start beneath the navigation bar */
+    padding-top: 70px;
+
+    /* credit to Arno Kathollnig @ dribbble.com/shots/1408488-12-Paper-Textures*/
+    background-image: url('paper_texture_03.png');
+    background-attachment: fixed;
+
+    /* taken from Twitter Bootstrap 3 */
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+}
+h1 {
+    line-height: 1.1;
+    display: block;
+    margin: 0;
+}
+h6 {
+    margin: 0;
+}
+.profile-details {
+    display: inline-table;
+}
+.profile-details>* {
+    height: 40px;
+    display: table-cell;
+    margin-right: 10px;
+    text-align: left;
+    vertical-align: middle;
+}
+.profile-details>div {
+    font-size: 14px;
+}
+.profile-details>div>a {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.profile-details img {
+    border-radius: 50%;
+}
+.profile-details>div>small {
+    display: block;
+    font-size: 12px;
+    color: #8A8A8A;
+}
+nav {
+    position: fixed;
+    z-index: 999999;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: 50px;
+
+    padding: 5px 50px;
+
+    background-color: rgba(52, 73, 94, 1);
+    border-bottom: 0px solid rgba(44, 62, 80, 1);
+}
+nav>ul {
+    list-style-type: none;
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+nav>ul:first-child {
+    float: left;
+}
+nav>ul:last-child {
+    float: right;
+}
+nav>ul:after {
+    clear: both;
+}
+nav>ul>li {
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: middle;
+}
+nav>ul>li,
+nav a {
+    color: #bdc3c7;
+    font-family: 'Lato', sans-serif;
+    text-decoration: none;
+}
+nav a:hover,
+nav a:focus {
+    color: #ecf0f1;
+    text-decoration: none;
+}
+nav .seperator {
+    border-left: 1px solid rgba(44, 62, 80, 1);
+    height: auto;
+}
+nav .logo
+{
+    color: rgba(236, 240, 241, 1);
+    font-family: 'Sanchez', sans-serif;
+    font-weight: 300;
+    font-size: 30px;
+}
+nav .profile-details>div {
+    padding: 0;
+    margin: 0;
+    text-align: right;
+    display: block;
+}
+nav .profile-details>div:first-child {
+    font-size: 16px;
+}
+nav .profile-details>div:last-child {
+    font-size: 12px;
+    font-style: italic;
+}
+.profile-pic {
+    border-radius: 50%;
+}
+nav .profile-pic {
+    height: 36px;
+    width: 36px;
+    margin-left: -10px;
+}
+@media only screen and (max-width: 650px) {
+    /* For mobile phones: */
+    nav .profile-details {
+        display: none;
+    }
+}
+@media only screen and (max-width: 460px) {
+    nav .fa {
+        display: none;
+    }
+}
+footer {
+    width: 100%;
+    display: block;
+    position: absolute;
+
+    margin: 0;
+    right: 0;
+    left: 0;
+
+    color: #FFF;
+
+    padding: 40px 80px;
+    background-color: #333;
+}
+.separator {
+    display: flex;
+    align-items: center;
+
+    margin: 15px 0;
+
+    font-family: 'Sanchez';
+    text-align: center;
+    color: #333;
+}
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #5D5D5D;
+}
+.separator::before {
+    margin-right: 10px;
+}
+.separator::after {
+    margin-left: 10px;
+}

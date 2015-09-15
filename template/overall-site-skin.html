@@ -1,23 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-<title>{$title}</title>
+<title>{$site['name']} > {$title}</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:400,300|Slabo+27px|Lora|Bitter|PT+Serif|Bree+Serif|Sanchez|Roboto:400,300">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="resources/bootstrap3/css/bootstrap.min.css">
+<script src="resources/bootstrap3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="resources/site.css">
+<link rel="stylesheet" type="text/css" href="resources/feed.css">
 </head>
+
+<nav>
+    <ul>
+        <li class="logo">{$site['name']}</li>
+        <li>
+            <span class="seperator"></span>
+        </li>
+        <li>
+            <a class="fa fa-globe fa-lg" href="#"></a>
+        </li>
+        <li>
+            <a class="fa fa-envelope fa-lg" href="#"></a>
+        </li>
+    </ul>
+    <ul>
+        {if $user}
+        <li class="profile-details">
+            <div><a href="#">Amit Evron</a></div>
+            <div>Teacher</div>
+        </li>
+        <li>
+            <img src="http://bootstrap-themes.github.io/application/assets/img/avatar-dhg.png" class="profile-pic" />
+        </li>
+        {else}
+        <li class="profile-details">
+            Guest, Log-in
+        </li>
+        {/if}
+    </ul>
+</nav>
+
 <body>
-
-<div class="container">
-    <div class="jumbotron">
-        <h1>{$title}</h1>
-        <p>{$content}</p>
-    </div>
-
-    <div>Execution time: {$exec_timer} second(s)</div>
-</div>
-
+{$content}
 </body>
 </html>
