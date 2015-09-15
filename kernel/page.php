@@ -22,14 +22,9 @@ abstract class PageBase
         try
         {
             if($this->enable === false)
-            {
                 throw new Trigger\Warning('page_not_init');
 
-            }
-            else
-            {
-                return $this->generate();
-            }
+            else return $this->generate();
         }
         catch(Trigger\Warning $e)
         {
