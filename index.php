@@ -4,9 +4,13 @@ try
 {
     /* import the Genius environment */
     require_once 'kernel/environment.php';
+    $app = new Genius\Application;
 
     /* display page */
-    (new Genius\Application)->display(@$_GET['page'] ?: 'home');
+    if($app->session->is_logged())
+        $app->display(@$_GET['act'] ?: 'feed');
+    else
+        $app->display('login');
 }
 catch(Exception $e)
 {
