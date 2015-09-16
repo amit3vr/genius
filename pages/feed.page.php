@@ -12,18 +12,6 @@ final class Feed extends Genius\Kernel\PageBase
         parent::__construct('News Feed');
     }
 
-    private function get_feed_content()
-    {
-        $feed = array_merge(Announcement::all(['pinned' => 0]), Event::all());
-
-        usort($feed, function($a, $b)
-        {
-            return (strtotime($b->create_date) - strtotime($a->create_date));
-        });
-
-        return $feed;
-    }
-
     private function generate_feed(...$items)
     {
         $feed = array_merge(...$items);

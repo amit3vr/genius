@@ -74,7 +74,6 @@ final class Application
 
             $layout->title = $page->title;
             $layout->content = (string) $page;
-            $layout->user = $this->session->user;
 
             echo $layout;
         }

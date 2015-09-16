@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-09-15 12:12:49
+<?php /* Smarty version 3.1.27, created on 2015-09-15 22:06:23
          compiled from "C:\xampp\htdocs\genius\template\overall-site-skin.html" */ ?>
 <?php
-/*%%SmartyHeaderCode:1518555f7e111444658_83641174%%*/
+/*%%SmartyHeaderCode:390355f86c2fe9eb48_41942757%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,27 +9,26 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0216fed6acb3e2736688d237c9d7bfda451b4a79' => 
     array (
       0 => 'C:\\xampp\\htdocs\\genius\\template\\overall-site-skin.html',
-      1 => 1442308254,
+      1 => 1442343981,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '1518555f7e111444658_83641174',
+  'nocache_hash' => '390355f86c2fe9eb48_41942757',
   'variables' => 
   array (
     'site' => 0,
     'title' => 0,
-    'user' => 0,
     'content' => 0,
   ),
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_55f7e11148a2f6_42892997',
+  'unifunc' => 'content_55f86c2fef8e05_62939517',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_55f7e11148a2f6_42892997')) {
-function content_55f7e11148a2f6_42892997 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_55f86c2fef8e05_62939517')) {
+function content_55f86c2fef8e05_62939517 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '1518555f7e111444658_83641174';
+$_smarty_tpl->properties['nocache_hash'] = '390355f86c2fe9eb48_41942757';
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -64,7 +63,7 @@ $_smarty_tpl->properties['nocache_hash'] = '1518555f7e111444658_83641174';
         </li>
     </ul>
     <ul>
-        <?php if ($_smarty_tpl->tpl_vars['user']->value) {?>
+        <?php if (\Genius\User::my(true)) {?>
         <li class="profile-details">
             <div><a href="#">Amit Evron</a></div>
             <div>Teacher</div>

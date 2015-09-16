@@ -1,7 +1,7 @@
 <?php namespace Genius\Pages;
 
 use Genius,
-    Genius\User,
+    Genius\Trigger,
     Genius\Layout;
 
 final class Login extends Genius\Kernel\PageBase
@@ -13,20 +13,15 @@ final class Login extends Genius\Kernel\PageBase
 
     protected function generate()
     {
+        global $app;
+
         $layout = new Layout('login.html');
 
         try
         {
             if (isset($_POST['key']) && isset($_POST['password']))
             {
-                (new User($_POST['key']))->login($_POST['password']);
-            }
-
-            switch (@$_GET['do'])
-            {
-                case 'logout':
-                    User::logout();
-                    break;
+                $app->session->login($_POST['key'], $_POST['password']);
             }
 
             $layout->error = null;
@@ -35,10 +30,8 @@ final class Login extends Genius\Kernel\PageBase
         {
             $layout->error = (string) $e;
         }
-        finally
-        {
-            return $layout->render();
-        }
+
+        return $layout->render();
     }
 }
 

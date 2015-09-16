@@ -4,6 +4,8 @@ try
 {
     /* import the Genius environment */
     require_once 'kernel/environment.php';
+
+    /* start new instance */
     $app = new Genius\Application;
 
     /* display page */

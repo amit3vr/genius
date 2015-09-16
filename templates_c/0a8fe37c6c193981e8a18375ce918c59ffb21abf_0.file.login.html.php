@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2015-09-15 16:39:02
+<?php /* Smarty version 3.1.27, created on 2015-09-15 21:54:48
          compiled from "C:\xampp\htdocs\genius\template\login.html" */ ?>
 <?php
-/*%%SmartyHeaderCode:534155f81f76c1e239_40577547%%*/
+/*%%SmartyHeaderCode:2446755f86978d60bf5_30809303%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,20 +9,20 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '0a8fe37c6c193981e8a18375ce918c59ffb21abf' => 
     array (
       0 => 'C:\\xampp\\htdocs\\genius\\template\\login.html',
-      1 => 1441989883,
+      1 => 1442343287,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '534155f81f76c1e239_40577547',
+  'nocache_hash' => '2446755f86978d60bf5_30809303',
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_55f81f76c92636_40171104',
+  'unifunc' => 'content_55f86978daa5c0_67802540',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_55f81f76c92636_40171104')) {
-function content_55f81f76c92636_40171104 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_55f86978daa5c0_67802540')) {
+function content_55f86978daa5c0_67802540 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '534155f81f76c1e239_40577547';
+$_smarty_tpl->properties['nocache_hash'] = '2446755f86978d60bf5_30809303';
 ?>
 <style>
 .login-page>div {

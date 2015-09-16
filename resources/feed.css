@@ -24,7 +24,6 @@ body {
     margin-bottom: 30px;
 }
 .feed .side-menu>div>h6 {
-    font-style: bold;
     font-family: 'Ariel';
     line-height: 1.1;
     font-size: 14px;
@@ -62,9 +61,6 @@ body {
 .feed .data-items .search-box:focus {
     border: 0;
     outline: 0;
-}
-.feed .data-items .search-box[input!=""] {
-    font-style: normal;
 }
 .feed .data-items .announcement,
 .feed .data-items .event {
@@ -143,7 +139,7 @@ body {
     margin-bottom: 20px;
 }
 .feed .widgets .statistics {
-    display: table-row;
+    display: table;
     width: 100%;
     background-color: #ffffff;
 }

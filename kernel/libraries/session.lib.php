@@ -1,9 +1,10 @@
 <?php namespace Genius;
 
+use Genius\Trigger,
+    Genius\User;
+
 final class Session
 {
-    private static $user = null;
-
     function __construct()
     {
         session_start();
@@ -11,7 +12,7 @@ final class Session
 
     function is_logged()
     {
-        return !empty($_SESSION['user']);
+        return !empty($_SESSION['key']);
     }
 
     function __set($field, $value)
@@ -22,5 +23,22 @@ final class Session
     function __get($field)
     {
         return @$_SESSION[$field];
+    }
+
+    public function login($key, $password)
+    {
+        $user = new User($key);
+
+        //if($user->password !== $password)
+        if(false)
+            throw new Trigger\Warning('incorrect_password');
+
+        $this->key = $key;
+    }
+
+    public function logout()
+    {
+        $this->key = null;
+        session_regenerate_id(true);
     }
 }

@@ -17,6 +17,19 @@ class User extends DBObject
         $this->fullname = "{$this->first_name} {$this->last_name}";
     }
 
+    public static function my($field)
+    {
+        global $app;
+
+        if(is_bool($field))
+            return ($app->session->is_logged() === $field);
+
+        if($app->session->is_logged())
+            return @(new User($app->session->key))->{$field};
+        else
+            return '';
+    }
+
     public static function by_id($id)
     {
         global $app;
@@ -38,21 +51,6 @@ class User extends DBObject
 
         $db = $app->database;
         $db('class-members')->get(['class-key' => $class_key]);
-    }
-
-    public function login($password)
-    {
-        global $app;
-
-        $app->session->user = $this;
-        return true;
-    }
-
-    public static function logout()
-    {
-        global $app;
-
-        $app->session->user = null;
     }
 }
 

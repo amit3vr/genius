@@ -24,9 +24,11 @@ class Layout
         $this->engine->registerClass('Utilities', '\Genius\Utilities');
         $this->engine->registerClass('Get', '\Genius\Get');
         $this->engine->registerClass('Date', '\DateTime');
+        $this->engine->registerClass('User', '\Genius\User');
+
+        $this->engine->registerObject('user', $app->session->user);
 
         /* auto built components */
-        $this->globals = ['user' => $app->session->user];
         $this->site = $app('site');
         $this->webmaster = $app('webmaster');
     }
@@ -53,8 +55,6 @@ class Layout
 
     public function render()
     {
-        $this->exec_timer = Utilities::timer();
-
         return $this->engine->fetch($this->path, null, null, null, false);
     }
 
