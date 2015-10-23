@@ -5,32 +5,17 @@ use Genius,
 
 abstract class PageBase
 {
-    private $enable;
-
     public $title;
 
-    protected abstract function generate();
-
-    protected function __construct($title, $enable = true)
+    protected function __construct($title, $temp_disable = false)
     {
         $this->title = $title;
-        $this->enable = $enable;
+
+        if($temp_disable)
+            throw new Trigger\Warning('page_not_init');
     }
 
-    public function __toString()
-    {
-        try
-        {
-            if($this->enable === false)
-                throw new Trigger\Warning('page_not_init');
-
-            else return $this->generate();
-        }
-        catch(Trigger\Warning $e)
-        {
-            return (string) $e;
-        }
-    }
+    public abstract function generate();
 }
 
 ?>

@@ -24,9 +24,9 @@ final class Feed extends Genius\Kernel\PageBase
         return $feed;
     }
 
-    protected function generate()
+    public function generate()
     {
-        $layout = new Layout('feed.html');
+        $layout = new Layout('feed');
 
         $layout->pinned_posts = $this->generate_feed(Announcement::all(['pinned' => true]));
         $layout->regular_posts = $this->generate_feed(Announcement::all(['pinned' => false]), Event::all());

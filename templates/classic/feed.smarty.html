@@ -35,7 +35,7 @@
                 <div class="profile-details">
                     <img src="http://bootstrap-themes.github.io/application/assets/img/avatar-dhg.png"/>
                     <div>
-                        <a href="/@{$post->author->username}">{$post->author->fullname}</a> · {Utilities::time_elapsed($post->create_date)}
+                        <a href="/@{$post->author->username}">{$post->author->full_name}</a> · {Utilities::time_elapsed($post->create_date)}
                         <small>Teacher</small>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                 <div class="profile-details">
                     <img src="http://bootstrap-themes.github.io/application/assets/img/avatar-dhg.png"/>
                     <div>
-                        <a href="/@{$post->author->username}">{$post->author->fullname}</a> · {Utilities::time_elapsed($post->create_date)}
+                        <a href="/@{$post->author->username}">{$post->author->full_name}</a> · {Utilities::time_elapsed($post->create_date)}
                         <small>Teacher</small>
                     </div>
                 </div>
@@ -106,7 +106,10 @@
                 </div>
             </div>
             <div class="content">
-                {$post->description}
+                {$post->description|substr:0:250}
+                {if $post->description|count_characters:true > 250}
+                ... <a href="#">Continue reading >></a>
+                {/if}
             </div>
         </div>
         {/if}
@@ -116,7 +119,7 @@
         <div>
             <ul class="pager">
                 <li class="previous disabled"><a><span aria-hidden="true">&larr;</span> Older</a></li>
-                <li class="next"><a href="feed/1">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                <li class="next"><a href="/feed/1">Newer <span aria-hidden="true">&rarr;</span></a></li>
             </ul>
         </div>
     </div>

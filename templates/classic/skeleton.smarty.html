@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<title>{$site['name']} > {$title}</title>
+<title>{$site.name} > {$title}</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Lato:400,300|Slabo+27px|Lora|Bitter|PT+Serif|Bree+Serif|Sanchez|Roboto:400,300">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="resources/bootstrap3/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/resources/bootstrap3/css/bootstrap.min.css">
 <script src="resources/bootstrap3/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="resources/site.css">
-<link rel="stylesheet" type="text/css" href="resources/feed.css">
+<link rel="stylesheet" type="text/css" href="/resources/site.css">
+<link rel="stylesheet" type="text/css" href="/resources/feed.css">
 </head>
 
 <nav>
     <ul>
         <li class="logo">{$site.name}</li>
-        <li>
-            <span class="seperator"></span>
-        </li>
+    </ul>
+    <ul>
+        {if User::my(true)}
         <li>
             <a class="fa fa-globe fa-lg" href="#"></a>
         </li>
         <li>
             <a class="fa fa-envelope fa-lg" href="#"></a>
         </li>
-    </ul>
-    <ul>
-        {if User::my(true)}
-        <li class="profile-details">
-            <div><a href="#">Amit Evron</a></div>
-            <div>Teacher</div>
-        </li>
-        <li>
-            <img src="http://bootstrap-themes.github.io/application/assets/img/avatar-dhg.png" class="profile-pic" />
+        <li><span class="seperator"></span></li>
+        <li><a href="/@{User::my('username')}">{User::my('email')}</a></li>
+        <li class="profile-pic">
+            <img src="http://bootstrap-themes.github.io/application/assets/img/avatar-dhg.png" />
         </li>
         {else}
-        <li class="profile-details">
-            Guest, Log-in
-        </li>
+        <li>Hi, Guest</li>
+        <li><span class="seperator"></span></li>
+        <li><a href="#" class="btn btn-xs btn-primary">Login</a></li>
+        <li><a href="#" class="btn btn-xs btn-success">Register</a></li>
         {/if}
     </ul>
 </nav>

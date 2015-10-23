@@ -17,6 +17,8 @@ return array(
     'system'
     => [
         'language'  => 'en-us',
+        'template'  => 'classic',
+
         'timezone'  => 'Asia/Jerusalem',
 
         'date-format'
@@ -31,14 +33,14 @@ return array(
 
     'site'
     => [
-        'name'      => 'Genius',
+        'name'      => 'Brainiac',
         'address'   => '',
         'status'    => true,
     ],
 
     'webmaster'
     => [
-        'name'      => 'amit',
+        'name'      => 'Webmaster',
         'email'     => '@.com',
     ],
 

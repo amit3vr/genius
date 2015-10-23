@@ -39,10 +39,4 @@ class Utilities
         $string = array_slice($string, 0, $level);
         return $string ? implode(', ', $string) . ' ago' : 'just now';
     }
-
-    public static function init(&$var, $value)
-    {
-        if(!isset($var) || empty($var))
-            $var = $value;
-    }
 }

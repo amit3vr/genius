@@ -5,8 +5,54 @@ Options -Indexes
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+#####################################################
+## Users profiles are accessed by tagging '@' infront
+## .. of their user-key that identifies them.
+#####################################################
+# Input:	your-site.com/@[user-key]
+# Output:	your-site.com/?act=profile&key=[user-key]
+#####################################################
+RewriteRule ^@(\w+)/?$ ?act=profile&key=$1 [L]
+
+#####################################################
+## Older news feed posts are found via a fit page id.
+#####################################################
+# Input:	your-site.com/feed/[page-id]
+# Output:	your-site.com/?act=feed&page=[page-id]
+#####################################################
+RewriteRule ^feed/(\d+)/?$ ?act=feed&page=$1
+
+#####################################################
+## Shortcut and a more fit url for the logout page.
+#####################################################
+# Input:	your-site.com/logout
+# Output:	your-site.com/?act=login&do=logout
+#####################################################
+RewriteRule ^logout/?$ ?act=login&do=logout [L]
+
+#####################################################
+## Shortcut for navigating to a page in the site.
+#####################################################
+# Input:	your-site.com/[page]
+# Output:	your-site.com/?act=[page]
+#####################################################
+RewriteRule ^(inbox|outbox)/?$ ?act=messages&show=$1 [L]
+
+#####################################################
+## Shortcut for navigating to a page in the site.
+#####################################################
+# Input:	your-site.com/[page]
+# Output:	your-site.com/?act=[page]
+#####################################################
+RewriteRule ^([A-Za-z]+)/?$ ?act=$1 [L]
+
+#####################################################
+## Some objects in the site are accessed via their
+## .. identifing key. Example: classes, events, etc.
+#####################################################
+# Input:	your-site.com/[page]/[key]
+# Output:	your-site.com/?act=[page]&key=[key]
+#####################################################
+RewriteRule ^([A-Za-z]+)/(\d+)/?$ ?act=$1&key=$2 [L]
 
 </IfModule>
-

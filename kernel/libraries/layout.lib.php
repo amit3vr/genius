@@ -9,21 +9,23 @@ class Layout
     private $path;
     private $engine;
 
-    public function __construct($name)
+    public function __construct($name, $type = 'html')
     {
         global $app;
 
-        $this->path = Path::layout_file($name);
+        $this->path = Path::template("{$name}.smarty.{$type}");
 
         if(!file_exists($this->path))
-            throw new Trigger\Warning('template_not_found');
+            throw new Trigger\Error('template_not_found');
 
         $this->engine = new Smarty();
-        $this->engine->caching = 0;
+
+        $this->engine->setTemplateDir(Path::template());
+        $this->engine->setCompileDir(Path::template('compiled/'));
+        $this->engine->setCaching(false);
 
         $this->engine->registerClass('Utilities', '\Genius\Utilities');
         $this->engine->registerClass('Get', '\Genius\Get');
-        $this->engine->registerClass('Date', '\DateTime');
         $this->engine->registerClass('User', '\Genius\User');
 
         $this->engine->registerObject('user', $app->session->user);

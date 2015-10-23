@@ -45,14 +45,11 @@ final class Error extends Trigger
 {
     public function __toString()
     {
-        $output = "";
-
-        $output .= "<h4>{$this->getMessage()}</h4>";
-        $output .= "Error Code: {$this->getID()}";
-        $output .= "<br />";
-        $output .= $this->getDate();
-
-        return $output;
+        return <<<ERROR_PAGE
+        <h4>{$this->getMessage()}</h4>
+        Error Code: {$this->getID()}
+        </br> {$this->getDate()}
+ERROR_PAGE;
     }
 }
 

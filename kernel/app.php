@@ -7,11 +7,14 @@ final class Application
     # | '_ \| '__/ _` | | '_ \| |/ _` |/ __|
     # | |_) | | | (_| | | | | | | (_| | (__
     # |_.__/|_|  \__,_|_|_| |_|_|\__,_|\___|
+    #
+    # Celebrate Knowing.
 
     const VERSION = '1.0.0-DEV';
     const LICENSE = 'asdg3456sdfghsfgh43sdvsdlg23';
 
     private $config;
+    private $breadcrumbs;
     private $db;
 
     public $session;
@@ -23,11 +26,13 @@ final class Application
 
         if(!isset($GLOBALS['app']))
             $GLOBALS['app'] = $this;
-        else throw new Trigger\Error('app_already_init');
+        else
+            throw new Trigger\Error('app_already_init');
 
         if(file_exists(BASE . '/config.php'))
-            Utilities::init($this->config, require_once(BASE. '/config.php'));
-        else throw new Trigger\Error('config_not_init');
+            $this->config = require_once(BASE. '/config.php');
+        else
+            throw new Trigger\Error('config_not_init');
 
         @date_default_timezone_set($this('system', 'timezone'));
 
@@ -70,25 +75,24 @@ final class Application
             $page = Get::page($page_name);
 
             /* generate layout */
-            $layout = new Layout('overall-site-skin.html');
+            $layout = new Layout('skeleton', 'html');
 
             $layout->title = $page->title;
-            $layout->content = (string) $page;
-
-            echo $layout;
-        }
-        catch(Trigger\Error $e)
-        {
-            echo $e;
-        }
-        catch(Trigger\Warning $e)
-        {
-            echo $e;
+            $layout->content = $page->generate();
         }
         catch(\Exception $e)
         {
-            echo $e;
+            $layout = (string) $e;
         }
+        finally
+        {
+            echo $layout;
+        }
+    }
+
+    public function add_breadcrumb($title, $offset = 0)
+    {
+
     }
 }
 

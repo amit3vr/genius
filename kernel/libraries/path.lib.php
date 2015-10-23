@@ -24,8 +24,12 @@ class Path
             return BASE. "/lang/{$lang}/{$name}.lang.php";
     }
 
-    public static function layout_file($name)
+    public static function template($name = '')
     {
-        return BASE. "/template/{$name}";
+        global $app;
+
+        $dir = $app('system', 'template') ?: '';
+
+        return BASE. "/templates/{$dir}/{$name}";
     }
 }

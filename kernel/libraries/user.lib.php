@@ -1,7 +1,6 @@
 <?php namespace Genius;
 
-use Genius\Trigger\Warning,
-    Genius\Database,
+use Genius\Database,
     Genius\DBObject;
 
 class User extends DBObject
@@ -14,7 +13,7 @@ class User extends DBObject
     {
         parent::__construct($key);
 
-        $this->fullname = "{$this->first_name} {$this->last_name}";
+        $this->full_name = "{$this->first_name} {$this->last_name}";
     }
 
     public static function my($field)

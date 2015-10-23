@@ -32,8 +32,8 @@ final class Session
         //if($user->password !== $password)
         if(false)
             throw new Trigger\Warning('incorrect_password');
-
-        $this->key = $key;
+        else
+            $this->key = $key;
     }
 
     public function logout()
